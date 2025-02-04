@@ -204,7 +204,7 @@ jobs:
            [官方源码](https://github.com/gnbdev/opengnb)
            
           tag_name: ${{env.tag}}
-          files: opengnb-$TARGET.zip
+          files: opengnb-${{ matrix.target }}.zip
   del:
     runs-on: ubuntu-latest
     steps:
