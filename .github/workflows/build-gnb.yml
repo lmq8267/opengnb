@@ -180,8 +180,9 @@ jobs:
        with:
         name: opengnb-${{ env.branch }}-${{ matrix.target }}
         path: bin/*
-     - run: |
-        shell: bash
+     - 
+       run: |
+       shell: bash
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
           if [ -z "${{ env.tag }}" ]; then
             echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
