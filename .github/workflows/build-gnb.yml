@@ -180,7 +180,7 @@ jobs:
        with:
         name: opengnb-${{ env.branch }}-${{ matrix.target }}
         path: bin/*
-     - name: 设置环境变量
+     - name: 打包
        shell: bash
        run: |
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
@@ -188,8 +188,11 @@ jobs:
               echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           fi
           echo "haxi=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          cp -r examples/node_config_example conf
+          zip -r opengnb-$TARGET.zip bin conf
        env:
         TAG: ${{ env.tag }}
+        TARGET: ${{ matrix.target }}
      - name: 发布Release
        uses: softprops/action-gh-release@v2
        with:
@@ -201,7 +204,7 @@ jobs:
            [官方源码](https://github.com/gnbdev/opengnb)
            
           tag_name: ${{env.tag}}
-          files: bin/*
+          files: opengnb-$TARGET.zip
   del:
     runs-on: ubuntu-latest
     steps:
