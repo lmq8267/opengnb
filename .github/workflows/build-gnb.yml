@@ -40,6 +40,10 @@ jobs:
         - target: x86_64-pc-windows
           os: ubuntu-latest
           URL: x86_64-w64-mingw32
+
+        - target: i686-pc-windows
+          os: ubuntu-latest
+          URL: i686-w64-mingw32
           
         - target: aarch64-linux-musl
           os: ubuntu-latest
@@ -134,6 +138,11 @@ jobs:
          export CXX="$CXX -static"
          if [[ "${{ matrix.target }}" == "x86_64-pc-windows" ]] ; then
             export WINDRES=x86_64-w64-mingw32-windres
+            make -f Makefile.mingw_x86_64 install
+            $STRIP bin/*
+            file bin/gnb.exe
+         elif [[ "${{ matrix.target }}" == "i686-pc-windows" ]] ; then
+            export WINDRES=i686-w64-mingw32-windres
             make -f Makefile.mingw_x86_64 install
             $STRIP bin/*
             file bin/gnb.exe
