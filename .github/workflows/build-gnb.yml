@@ -181,6 +181,7 @@ jobs:
         name: opengnb-${{ env.branch }}-${{ matrix.target }}
         path: bin/*
      - name: 打包
+       if: github.event.inputs.rel == 'true'
        shell: bash
        run: |
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
