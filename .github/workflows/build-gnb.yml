@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: '编译opengn源码的分支或版本号，默认主分支master'
+        description: '编译opengnb源码的分支或版本号，默认主分支master'
         required: true
         default: 'master'
       rel:
