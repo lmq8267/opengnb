@@ -229,6 +229,9 @@ jobs:
           echo "haxi=$(git rev-parse HEAD)" >> $GITHUB_ENV
           cp -r examples/node_config_example conf
           zip -r opengnb-$TARGET.zip bin conf
+          if [ "${{ github.event.inputs.lite }}" == "true" ]; then
+              echo "lite_info=lite模式增加到50个节点[（1001|10.1.0.1|255.255.0.0 至 1050|10.1.0.50|255.255.0.0）](https://github.com/gnbdev/opengnb/blob/${{ env.haxi }}/src/gnb_config_lite.c#L325C48-L325C73)" >> $GITHUB_ENV
+          fi
        env:
         TAG: ${{ env.tag }}
         TARGET: ${{ matrix.target }}
@@ -240,7 +243,7 @@ jobs:
           body: |
            > ### 编译时间 ：${{ env.build_time }} [提交记录](https://github.com/gnbdev/opengnb/tree/${{ env.haxi }})
            
-           lite模式增加到50个节点[（1001|10.1.0.1|255.255.0.0 至 1050|10.1.0.50|255.255.0.0）](https://github.com/gnbdev/opengnb/blob/${{ env.haxi }}/src/gnb_config_lite.c#L325C48-L325C73)
+           ${{ env.lite_info }}
            [官方源码](https://github.com/gnbdev/opengnb)
            
           tag_name: ${{env.tag}}
