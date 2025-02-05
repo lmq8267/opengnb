@@ -20,6 +20,11 @@ on:
         description: '指定发布Release的版本号（留空为源码提交哈希值）'
         required: false
         default: ''
+      del:
+        description: '是否删除历史编译的流程记录'
+        required: true
+        default: true
+        type: boolean
   
 env:
   branch: "${{ github.event.inputs.branch }}"
@@ -252,6 +257,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 删除流程记录
+        if: github.event.inputs.del == 'true'
         uses: Mattraks/delete-workflow-runs@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
