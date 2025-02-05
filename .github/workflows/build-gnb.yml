@@ -89,6 +89,10 @@ jobs:
           os: ubuntu-latest
           URL: s390x-linux-musl
 
+        - target: loongarch64-linux-musl
+          os: ubuntu-latest
+          URL: loongarch64-linux-musl
+
         - target: x86_64-freebsd
           os: ubuntu-latest
           arch: x86-64
