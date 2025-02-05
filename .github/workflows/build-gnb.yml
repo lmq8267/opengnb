@@ -6,13 +6,18 @@ on:
         description: '编译opengnb源码的分支或版本号，默认主分支master'
         required: true
         default: 'master'
+      lite:
+        description: '是否将lite模式增加到50个节点'
+        required: true
+        default: true
+        type: boolean
       rel:
         description: '编译完成后是否发布Release'
         required: true
         default: false
         type: boolean
       tag:
-        description: '发布Release指定的版本号（留空为提交哈希值）'
+        description: '指定发布Release的版本号（留空为源码提交哈希值）'
         required: false
         default: ''
   
@@ -125,6 +130,7 @@ jobs:
         repository: gnbdev/opengnb
         ref: ${{ env.branch }}
      - name: lite模式增加50个节点
+       if: github.event.inputs.lite == 'true'
        shell: bash
        run: |
          if [[ "$OSTYPE" == "darwin"* ]]; then
