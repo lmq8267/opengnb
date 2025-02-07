@@ -169,8 +169,8 @@ jobs:
          fi
          brew install llvm
          if [[ "$TARGET" == "x86_64-apple-darwin" ]]; then
-             export CC=clang
-             export CXX=clang++
+             export CC="clang -arch x86_64"
+             export CXX="clang++ -arch x86_64"
          else
              export CC="clang -arch arm64"
              export CXX="clang++ -arch arm64"
