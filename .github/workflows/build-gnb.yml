@@ -154,10 +154,27 @@ jobs:
         gccpath: /tmp
      - name: 编译 macOS
        if: ${{ runner.os == 'macOS' }}
+       shell: bash
+       env:
+        TARGET: ${{ matrix.target }}
        run: |
+         echo "检测当前架构..."
+         ARCH=$(uname -m)
+         echo "当前架构: $ARCH"
+         if [[ "$ARCH" == "arm64" ]]; then
+            echo "正在安装 ARM64 版本的 LLVM..."
+            eval "$(/opt/homebrew/bin/brew shellenv)" 
+         else
+            echo "当前为 x86_64 运行环境"
+         fi
          brew install llvm
-         export CC=clang
-         export CXX=clang++
+         if [[ "$TARGET" == "x86_64-apple-darwin" ]]; then
+             export CC=clang
+             export CXX=clang++
+         else
+             export CC="clang -arch arm64"
+             export CXX="clang++ -arch arm64"
+         fi
          make -f Makefile.Darwin install
          file bin/gnb
      - name: 编译 Liunx Windows
