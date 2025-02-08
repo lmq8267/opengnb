@@ -236,8 +236,8 @@ jobs:
               export CXX=clang++
               gmake -f Makefile.openbsd install
               strip bin/*
-              file bin/gnb
-              ldd bin/gnb
+              file bin/gnb 
+              ldd bin/gnb || true
               bin/gnb -h
      - name: 安装 UPX
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'windows') && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
