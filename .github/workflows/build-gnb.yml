@@ -163,16 +163,8 @@ jobs:
        env:
         TARGET: ${{ matrix.target }}
        run: |
-         echo "检测当前架构..."
          ARCH=$(uname -m)
-         echo "当前架构: $ARCH"
-         if [[ "$ARCH" == "arm64" ]]; then
-            echo "正在安装 ARM64 版本的 LLVM..."
-            eval "$(/opt/homebrew/bin/brew shellenv)" 
-         else
-            echo "当前为 x86_64 运行环境"
-         fi
-         brew install llvm
+         echo "当前机器架构: $ARCH"
          if [[ "$TARGET" == "x86_64-apple-darwin" ]]; then
              export CC="clang -arch x86_64"
              export CXX="clang++ -arch x86_64"
@@ -182,6 +174,8 @@ jobs:
          fi
          make -f Makefile.Darwin install
          file bin/gnb
+         otool -L bin/gnb
+         bin/gnb -h
      - name: 编译 Liunx Windows
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') }}
        run: |
@@ -224,6 +218,8 @@ jobs:
               gmake -f Makefile.freebsd install
               strip bin/*
               file bin/gnb
+              ldd bin/gnb || true
+              bin/gnb -h
      - name: 编译 OpenBSD
        if: ${{ endsWith(matrix.target, 'openbsd') }}
        uses: cross-platform-actions/action@master
@@ -241,6 +237,8 @@ jobs:
               gmake -f Makefile.openbsd install
               strip bin/*
               file bin/gnb
+              ldd bin/gnb
+              bin/gnb -h
      - name: 安装 UPX
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'windows') && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
        uses: crazy-max/ghaction-upx@v3
