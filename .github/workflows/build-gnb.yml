@@ -25,6 +25,11 @@ on:
         description: '指定Release的版本号（留空为源码提交哈希值）'
         required: false
         default: ''
+      upx:
+        description: '是否使用upx压缩linux的二进制'
+        required: true
+        default: true
+        type: boolean
   
 env:
   branch: "${{ github.event.inputs.branch }}"
@@ -236,6 +241,15 @@ jobs:
               gmake -f Makefile.openbsd install
               strip bin/*
               file bin/gnb
+     - name: 安装 UPX
+       if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
+       uses: crazy-max/ghaction-upx@v3
+       with:
+        version: latest
+        install-only: true
+     - name: 压缩
+       if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
+       run: upx --lzma --best bin/*
      - uses: actions/upload-artifact@v4
        with:
         name: opengnb-${{ env.branch }}-${{ matrix.target }}
