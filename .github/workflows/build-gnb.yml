@@ -172,12 +172,12 @@ jobs:
          file bin/gnb
          otool -L bin/gnb
          bin/gnb -h
-         mv -f bin/gnb bin/gnb-x86
+         mv -f bin/gnb bin/gnb-x86_64
          make -f Makefile.Darwin clean
 
          export CC="clang -arch arm64"
          export CXX="clang++ -arch arm64"
-          make -f Makefile.Darwin install
+         make -f Makefile.Darwin install
          file bin/gnb
          otool -L bin/gnb
          bin/gnb -h
