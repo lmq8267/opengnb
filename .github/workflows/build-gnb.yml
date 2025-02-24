@@ -173,7 +173,7 @@ jobs:
          otool -L bin/gnb
          bin/gnb -h
          mv -f bin/gnb bin/gnb-x86
-         make clean
+         make -f Makefile.Darwin clean
 
          export CC="clang -arch arm64"
          export CXX="clang++ -arch arm64"
