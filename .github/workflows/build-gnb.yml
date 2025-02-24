@@ -172,7 +172,7 @@ jobs:
          file bin/gnb
          otool -L bin/gnb
          bin/gnb -h
-         mv -f bin/gnb-x86
+         mv -f bin/gnb bin/gnb-x86
          make clean
 
          export CC="clang -arch arm64"
@@ -181,7 +181,7 @@ jobs:
          file bin/gnb
          otool -L bin/gnb
          bin/gnb -h
-         mv -f bin/gnb-arm64
+         mv -f bin/gnb bin/gnb-arm64
 
          lipo -create -output bin/gnb bin/gnb-x86_64 bin/gnb-arm64
          file bin/gnb
