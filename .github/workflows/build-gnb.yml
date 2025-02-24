@@ -171,6 +171,9 @@ jobs:
          otool -L bin/gnb
          bin/gnb -h
          mv -f bin/gnb bin/gnb-x86_64
+         mv -f bin/gnb_crypto bin/gnb_crypto-x86_64
+         mv -f bin/gnb_ctl bin/gnb_ctl-x86_64
+         mv -f bin/gnb_es bin/gnb_es-x86_64
          make -f Makefile.Darwin clean
 
          export CC="clang -arch arm64"
@@ -180,11 +183,20 @@ jobs:
          otool -L bin/gnb
          bin/gnb -h
          mv -f bin/gnb bin/gnb-arm64
+         mv -f bin/gnb_crypto bin/gnb_crypto-arm64
+         mv -f bin/gnb_ctl bin/gnb_ctl-arm64
+         mv -f bin/gnb_es bin/gnb_es-arm64
 
          lipo -create -output bin/gnb bin/gnb-x86_64 bin/gnb-arm64
+         lipo -create -output bin/gnb_crypto bin/gnb_crypto-x86_64 bin/gnb_crypto-arm64
+         lipo -create -output bin/gnb_ctl bin/gnb_ctl-x86_64 bin/gnb_ctl-arm64
+         lipo -create -output bin/gnb_es bin/gnb_es-x86_64 bin/gnb_es-arm64
+         
          file bin/gnb
          otool -L bin/gnb
          bin/gnb -h
+         cd bin
+         rm gnb-* gnb_crypto-* gnb_ctl-* gnb_es-*
          
      - name: 编译 Liunx Windows
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') }}
