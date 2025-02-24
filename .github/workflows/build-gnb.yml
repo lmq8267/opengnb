@@ -271,8 +271,8 @@ jobs:
               echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           fi
           echo "haxi=$(git rev-parse HEAD)" >> $GITHUB_ENV
-          cp -r examples/node_config_example conf
-          zip -r opengnb-$TARGET.zip bin conf
+          cp -r examples/node_config_example conf_example
+          zip -r opengnb-$TARGET.zip bin conf_example
           if [ "${{ github.event.inputs.lite }}" == "true" ]; then
               echo "lite_info=lite模式增加到50个节点[（1001|10.1.0.1|255.255.0.0 至 1050|10.1.0.50|255.255.0.0）](https://github.com/gnbdev/opengnb/blob/${{ env.haxi }}/src/gnb_config_lite.c#L325C48-L325C73)" >> $GITHUB_ENV
           fi
