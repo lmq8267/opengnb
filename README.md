@@ -10,6 +10,6 @@
 <a href="GitHub repo size"><img src="https://img.shields.io/github/repo-size/lmq8267/opengnb?logo=github&label=%E4%BB%93%E5%BA%93%E5%A4%A7%E5%B0%8F"></a>
 <a href="https://github.com/lmq8267/opengnb/actions?query=workflow%3ABuild"><img src="https://img.shields.io/github/actions/workflow/status/lmq8267/opengnb/build-gnb.yml?branch=main&logo=github&label=%E6%9E%84%E5%BB%BA%E7%8A%B6%E6%80%81" alt="Build status"></a>
 
-官方项目地址：https://github.com/crazywhalecc/static-php-cli
+官方项目地址：https://github.com/gnbdev/opengnb
 
 
