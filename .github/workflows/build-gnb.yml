@@ -221,7 +221,7 @@ jobs:
             $STRIP bin/*
             file bin/gnb.exe
          else
-            make -f Makefile.openwrt install
+            make -f Makefile.linux install
             $STRIP bin/*
             file bin/gnb
          fi
