@@ -133,9 +133,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
      - name: Checkout code
-       uses: actions/checkout@v4
+       uses: actions/checkout@main
        with:
-        repository: gnbdev/opengnb
+        repository: opengnb/opengnb
         ref: ${{ env.branch }}
      - name: lite模式增加50个节点
        if: github.event.inputs.lite == 'true'
@@ -263,14 +263,14 @@ jobs:
               bin/gnb -h
      - name: 安装 UPX
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'windows') && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
-       uses: crazy-max/ghaction-upx@v3
+       uses: crazy-max/ghaction-upx@master
        with:
         version: v4.2.4
         install-only: true
      - name: 压缩
        if: ${{ runner.os == 'Linux' && !endsWith(matrix.target, 'windows') && !endsWith(matrix.target, 'openbsd') && !endsWith(matrix.target, 'freebsd') && !startsWith(matrix.target, 's390x') && !startsWith(matrix.target, 'loongarch64') && github.event.inputs.upx == 'true' }}
        run: upx --lzma --best bin/*
-     - uses: actions/upload-artifact@v4
+     - uses: actions/upload-artifact@main
        with:
         name: opengnb-${{ env.branch }}-${{ matrix.target }}
         path: bin/*
@@ -286,7 +286,7 @@ jobs:
           cp -r examples/node_config_example conf_example
           zip -r opengnb-$TARGET.zip bin conf_example
           if [ "${{ github.event.inputs.lite }}" == "true" ]; then
-              echo "lite_info=lite模式增加到50个节点[（1001|10.1.0.1|255.255.0.0 至 1050|10.1.0.50|255.255.0.0）](https://github.com/gnbdev/opengnb/blob/${{ env.haxi }}/src/gnb_config_lite.c#L325C48-L325C73)" >> $GITHUB_ENV
+              echo "lite_info=lite模式增加到50个节点[（1001|10.1.0.1|255.255.0.0 至 1050|10.1.0.50|255.255.0.0）](https://github.com/opengnb/opengnb/blob/${{ env.haxi }}/src/gnb_config_lite.c#L325C48-L325C73)" >> $GITHUB_ENV
           fi
        env:
         TAG: ${{ env.tag }}
@@ -299,10 +299,10 @@ jobs:
           body: |
            > ### ![](https://img.shields.io/badge/%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4-${{ env.build_time }}-8267?logo=github&labelColor=%E9%A1%BB)![](https://img.shields.io/github/downloads/${{ github.repository }}/${{env.tag}}/total?label=%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&logo=github)
            
-           [提交记录](https://github.com/gnbdev/opengnb/tree/${{ env.haxi }})
+           [提交记录](https://github.com/opengnb/opengnb/tree/${{ env.haxi }})
            
            ${{ env.lite_info }}
-           [官方源码](https://github.com/gnbdev/opengnb)
+           [官方源码](https://github.com/opengnb/opengnb)
            
           tag_name: ${{env.tag}}
           files: opengnb-${{ matrix.target }}.zip
