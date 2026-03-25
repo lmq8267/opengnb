@@ -222,7 +222,7 @@ jobs:
             file bin/gnb.exe
          else
             # 因使用的是musl工具链需要修改编译标志
-            sed -i 's/GNB_LINUX_BUILD/GNB_OPENWRT_BUILD/g' Makefile.linux
+            sed -i 's/GNB_LINUX_BUILD=1/GNB_OPENWRT_BUILD=1 -D_GNU_SOURCE/g' Makefile.linux
             make -f Makefile.linux install
             $STRIP bin/*
             file bin/gnb
