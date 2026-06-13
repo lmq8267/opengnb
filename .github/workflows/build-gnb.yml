@@ -294,7 +294,7 @@ jobs:
         TARGET: ${{ matrix.target }}
      - name: 发布Release
        if: github.event.inputs.rel == 'true'
-       uses: softprops/action-gh-release@v2
+       uses: lmq8267/action-gh-release@master
        with:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
